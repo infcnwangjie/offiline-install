@@ -1,0 +1,28 @@
+find a centos machine,which have internet:
+
+1.you should use:
+   yum install createrepo       (to installcreaterepo)
+
+2.move your rpm file to a directory,for example /root/kdc
+
+  createrepo -v /root/kdc  (create the rpm files ,yum installfiles index)
+
+then local yum files has been finished.
+
+so ,how to use it?
+
+
+the command is as blow:
+
+mkdir -p /etc/yum.repos.d/mysqlpipbak
+mv /etc/yum.repos.d/*.repo  /etc/yum.repos.d/mysqlpipbak/
+cat > /etc/yum.repos.d/mysqlpip.repo << EOF
+[mysqlpip]
+name                                = mysqlpip
+baseurl                             = file:///root/hdc
+enabled                             = 1
+gpgcheck                            = 0
+EOF
+
+yum clean all && yum repolist 
+yum install -y mysql-community-devel mysql-community-client python-pip python-devel  gcc
